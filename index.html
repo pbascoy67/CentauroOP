@@ -36,9 +36,12 @@
 
     /* Contenedor para alinear .header y .container al mismo ancho */
     .wrapper {
-      max-width: 700px; /* Ajusta el ancho máximo según desees */
+      max-width: 1000px; /* Ajusta el ancho máximo para acomodar la división en pantalla grande */
       width: 100%;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     /* Clases para cambiar fondo según tipo de usuario */
@@ -145,11 +148,11 @@
     /* ================== INPUTS ================== */
     input[type="text"] {
       width: 100%;
-      padding: 12px; /* Aumentado de 8px a 12px */
+      padding: 16px; /* Aumentado de 8px a 16px */
       border: 1px solid #ccc;
       border-radius: 4px;
       outline: none;
-      font-size: 1.1rem; /* Aumentado de 1rem a 1.1rem */
+      font-size: 1.2rem; /* Aumentado de 1rem a 1.2rem */
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -161,7 +164,7 @@
       flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas pequeñas */
     }
     button {
-      padding: 10px 20px;
+      padding: 12px 24px; /* Aumentado para mejor usabilidad */
       background-color: #0E5CAD;
       border: none;
       border-radius: 4px;
@@ -207,7 +210,7 @@
       padding: 15px;
       min-height: 80px;
       line-height: 1.6;
-      font-size: 0.95rem;
+      font-size: 1rem; /* Aumentado a 1rem */
       transition: background-color 0.3s ease, color 0.3s ease;
       overflow-wrap: break-word; /* Para evitar desbordamiento de texto */
     }
@@ -219,7 +222,7 @@
       animation: blink 1s infinite;
       margin-bottom: 10px;
       display: inline-block;
-      font-size: 1.15rem; /* 15% más grande de lo normal */
+      font-size: 1.3rem; /* 15% más grande de lo normal */
     }
     @keyframes blink {
       50% {
@@ -294,6 +297,23 @@
       transition: max-height 0.3s ease;
     }
 
+    /* ================== DIVISIÓN DE LA PANTALLA AL SELECCIONAR Acordeón ================== */
+    .response-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (min-width: 800px) {
+      .response-container.expand {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      .document-data, .accordion-response {
+        width: 48%;
+      }
+    }
+
     /* ================== RESPONSIVE ================== */
     @media (max-width: 600px) {
       .wrapper {
@@ -316,7 +336,44 @@
       .accordion-content {
         max-height: none; /* Permite expandirse completamente en móviles */
       }
+      .response-container.expand {
+        flex-direction: column;
+      }
+      .document-data, .accordion-response {
+        width: 100%;
+      }
     }
+
+    /* ================== MEJORA SORPRESA: INTERFAZ MÁS LIMPIA Y ATRACTIVA ================== */
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .output, .document-data, .accordion-response {
+      background-color: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .dependent-box {
+      background-color: rgba(255, 255, 255, 0.8);
+      transition: background-color 0.3s ease;
+    }
+
+    .accordion-header {
+      border-radius: 8px;
+    }
+
+    .accordion-content {
+      border-radius: 0 0 8px 8px;
+    }
+
   </style>
 </head>
 <body>
@@ -492,6 +549,16 @@
       document.getElementById('sideMenu').style.display = 'none';
       // Remover clases de fondo
       document.body.classList.remove('bg-leader', 'bg-dependent');
+      // Remover clase de expansión de la respuesta
+      const responseContainer = document.querySelector('.response-container');
+      if (responseContainer) {
+        responseContainer.classList.remove('expand');
+        // Remover contenido del acordeón seleccionado
+        const accordionResponse = document.querySelector('.accordion-response');
+        if (accordionResponse) {
+          accordionResponse.innerHTML = '';
+        }
+      }
     }
 
     function realizarConsulta() {
@@ -711,8 +778,43 @@
           // Alternar el display
           if (content.style.display === 'block') {
             content.style.display = 'none';
+            // Remover la sección de contenido del acordeón
+            const accordionResponse = document.querySelector('.accordion-response');
+            if (accordionResponse) {
+              accordionResponse.innerHTML = '';
+              const responseContainer = document.querySelector('.response-container');
+              responseContainer.classList.remove('expand');
+            }
           } else {
+            // Cerrar cualquier otro contenido abierto
+            document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
+            document.querySelectorAll('.accordion-response').forEach(r => r.innerHTML = '');
+            // Abrir el contenido seleccionado
             content.style.display = 'block';
+
+            // Dividir la pantalla en dos secciones
+            const responseContainer = document.createElement('div');
+            responseContainer.classList.add('response-container', 'expand');
+
+            // Obtener los datos del documento
+            const documentData = document.getElementById('respuesta').innerHTML;
+
+            // Crear contenedor para los datos del documento
+            const docDataDiv = document.createElement('div');
+            docDataDiv.classList.add('document-data');
+            docDataDiv.innerHTML = documentData;
+
+            // Crear contenedor para el contenido del acordeón
+            const accordionContentDiv = document.createElement('div');
+            accordionContentDiv.classList.add('accordion-response');
+            accordionContentDiv.innerHTML = content.innerHTML;
+
+            // Limpiar la respuesta actual y agregar la división
+            const respuesta = document.getElementById('respuesta');
+            respuesta.innerHTML = '';
+            responseContainer.appendChild(docDataDiv);
+            responseContainer.appendChild(accordionContentDiv);
+            respuesta.appendChild(responseContainer);
           }
         });
       });
