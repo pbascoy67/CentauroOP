@@ -372,84 +372,11 @@
       </div>
     </section>
     
-    <!-- Menú Acordeón (Visible Solo para Líderes) -->
+    <!-- Menú Acordeón (Visible Solo para Líderes o Dependientes) -->
     <aside class="side-menu" id="sideMenu" aria-label="Información Importante">
       <h2>Información importante</h2>
       <div class="accordion" id="accordionExample">
-        
-        <!-- Punto 1: Preguntas Frecuentes -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              1. Preguntas frecuentes
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              Revisar que todos tus dependientes tengan un email válido y que no se repita con ningún otro, dado que será el usuario para ingresar a Open Key. Para agregar o modificar un email, ver el punto 4 del menú.<br><br>
-              Si necesitas dar de alta o baja un dependiente, no lo podrás hacer tú mismo; deberás enviar un correo al administrador pidiendo el cambio al siguiente email: <strong>elcentauroadm@gmail.com</strong>.
-            </div>
-          </div>
-        </div>
-        
-        <!-- Punto 2: Cómo Bajar la App de Open Key -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              2. Cómo bajar la app de Open Key
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <p>Para descargar la aplicación Open Key, elige el enlace correspondiente a tu sistema operativo:</p>
-              <ul>
-                <li><a href="https://play.google.com/store/apps/details?id=com.openkey" target="_blank" rel="noopener noreferrer">Google Play Store (Android)</a></li>
-                <li><a href="https://apps.apple.com/ar/app/openkey/id1326856476" target="_blank" rel="noopener noreferrer">Apple App Store (iPhone)</a></li>
-              </ul>
-              <p>Para activar la aplicación, asegúrate de cumplir con los siguientes requisitos:</p>
-              <ol>
-                <li>Estar registrado en la base de Open Key.</li>
-                <li>Tener un correo electrónico válido.</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Punto 3: Cómo Sacarme la Selfie -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              3. Cómo sacarme la selfie
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key pero grisado; se te avisará cuando sea el momento.
-            </div>
-          </div>
-        </div>
-        
-        <!-- Punto 4: Cómo Modificar los Datos de mi Grupo Familiar -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingFour">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-              4. Cómo modificar los datos de mi grupo familiar
-            </button>
-          </h2>
-          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              Vos como Líder de grupo podés entrar a la aplicación de Open Key en la sección <strong>Censo - Mi Grupo Familiar</strong> y, buscando por número de documento de tus dependientes, podrás modificar los siguientes datos:
-              <ul>
-                <li>Nombre y apellido (si está mal cargado).</li>
-                <li>Email (si no es correcto; este será el usuario para registrarse en la aplicación Open Key).</li>
-                <li>Teléfono (si está incorrecto o en blanco).</li>
-                <li>Relación de parentesco (si está incorrecta o en blanco).</li>
-              </ul>
-              <p><strong>Nota:</strong> El email es el usuario para entrar a Open Key, por lo tanto, aseguráte de que todos los dependientes tengan un email único.</p>
-            </div>
-          </div>
-        </div>
-        
+        <!-- Los ítems del acordeón se generarán dinámicamente con JavaScript -->
       </div>
     </aside>
     
@@ -640,6 +567,9 @@
           respuestaHTML += "Nunca ha entrado aún a la app de Open Key.<br>";
         }
         
+        // Generar menú acordeón para dependientes
+        generarMenuAcordeon('dependiente');
+        
       } else if (valResp === "SI") {
         // Líder
         document.body.classList.add('bg-leader');
@@ -686,8 +616,8 @@
           respuestaHTML += "No tienes dependientes registrados en tu grupo.<br>";
         }
         
-        // Mostrar menú acordeón
-        sideMenu.style.display = 'block';
+        // Generar menú acordeón para líderes
+        generarMenuAcordeon('lider');
       }
       
       // Mostrar la respuesta
@@ -702,6 +632,134 @@
           ${mensaje}
         </div>
       `;
+    }
+    
+    // Función para generar el menú acordeón dinámicamente
+    function generarMenuAcordeon(tipo) {
+      const accordion = document.getElementById('accordionExample');
+      accordion.innerHTML = ''; // Limpiar contenido previo
+      
+      let items = [];
+      
+      if (tipo === 'lider') {
+        // Menú acordeón completo para líderes
+        items = [
+          {
+            id: 'collapseOne',
+            header: '1. Preguntas frecuentes',
+            body: `
+              Revisar que todos tus dependientes tengan un email válido y que no se repita con ningún otro, dado que será el usuario para ingresar a Open Key. Para agregar o modificar un email, ver el punto 4 del menú.<br><br>
+              Si necesitas dar de alta o baja un dependiente, no lo podrás hacer tú mismo; deberás enviar un correo al administrador pidiendo el cambio al siguiente email: <strong>elcentauroadm@gmail.com</strong>.
+            `
+          },
+          {
+            id: 'collapseTwo',
+            header: '2. Cómo bajar la app de Open Key',
+            body: `
+              <p>Para descargar la aplicación Open Key, elige el enlace correspondiente a tu sistema operativo:</p>
+              <ul>
+                <li><a href="https://play.google.com/store/apps/details?id=com.openkey" target="_blank" rel="noopener noreferrer">Google Play Store (Android)</a></li>
+                <li><a href="https://apps.apple.com/ar/app/openkey/id1326856476" target="_blank" rel="noopener noreferrer">Apple App Store (iPhone)</a></li>
+              </ul>
+              <p>Para activar la aplicación, asegúrate de cumplir con los siguientes requisitos:</p>
+              <ol>
+                <li>Estar registrado en la base de Open Key.</li>
+                <li>Tener un correo electrónico válido.</li>
+              </ol>
+            `
+          },
+          {
+            id: 'collapseThree',
+            header: '3. Cómo sacarme la selfie',
+            body: `
+              Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key pero grisado; se te avisará cuando sea el momento.
+            `
+          },
+          {
+            id: 'collapseFour',
+            header: '4. Cómo modificar los datos de mi grupo familiar',
+            body: `
+              Vos como Líder de grupo podés entrar a la aplicación de Open Key en la sección <strong>Censo - Mi Grupo Familiar</strong> y, buscando por número de documento de tus dependientes, podrás modificar los siguientes datos:
+              <ul>
+                <li>Nombre y apellido (si está mal cargado).</li>
+                <li>Email (si no es correcto; este será el usuario para registrarse en la aplicación Open Key).</li>
+                <li>Teléfono (si está incorrecto o en blanco).</li>
+                <li>Relación de parentesco (si está incorrecta o en blanco).</li>
+              </ul>
+              <p><strong>Nota:</strong> El email es el usuario para entrar a Open Key, por lo tanto, aseguráte de que todos los dependientes tengan un email único.</p>
+            `
+          }
+        ];
+      } else if (tipo === 'dependiente') {
+        // Menú acordeón reducido para dependientes
+        items = [
+          {
+            id: 'collapseDepOne',
+            header: '1. Cómo bajar la app de Open Key',
+            body: `
+              <p>Para descargar la aplicación Open Key, elige el enlace correspondiente a tu sistema operativo:</p>
+              <ul>
+                <li><a href="https://play.google.com/store/apps/details?id=com.openkey" target="_blank" rel="noopener noreferrer">Google Play Store (Android)</a></li>
+                <li><a href="https://apps.apple.com/ar/app/openkey/id1326856476" target="_blank" rel="noopener noreferrer">Apple App Store (iPhone)</a></li>
+              </ul>
+              <p>Para activar la aplicación, asegúrate de cumplir con los siguientes requisitos:</p>
+              <ol>
+                <li>Estar registrado en la base de Open Key.</li>
+                <li>Tener un correo electrónico válido.</li>
+              </ol>
+            `
+          },
+          {
+            id: 'collapseDepTwo',
+            header: '2. Cómo sacarme la selfie',
+            body: `
+              Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key pero grisado; se te avisará cuando sea el momento.
+            `
+          }
+        ];
+      }
+      
+      // Generar los ítems del acordeón
+      items.forEach(item => {
+        const accordionItem = document.createElement('div');
+        accordionItem.classList.add('accordion-item');
+        
+        // Encabezado
+        const header = document.createElement('h2');
+        header.classList.add('accordion-header');
+        header.id = `heading-${item.id}`;
+        
+        const button = document.createElement('button');
+        button.classList.add('accordion-button', 'collapsed');
+        button.type = 'button';
+        button.setAttribute('data-bs-toggle', 'collapse');
+        button.setAttribute('data-bs-target', `#${item.id}`);
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-controls', item.id);
+        button.innerHTML = item.header;
+        
+        header.appendChild(button);
+        accordionItem.appendChild(header);
+        
+        // Contenido
+        const collapseDiv = document.createElement('div');
+        collapseDiv.id = item.id;
+        collapseDiv.classList.add('accordion-collapse', 'collapse');
+        collapseDiv.setAttribute('aria-labelledby', `heading-${item.id}`);
+        collapseDiv.setAttribute('data-bs-parent', '#accordionExample');
+        
+        const body = document.createElement('div');
+        body.classList.add('accordion-body');
+        body.innerHTML = item.body;
+        
+        collapseDiv.appendChild(body);
+        accordionItem.appendChild(collapseDiv);
+        
+        accordion.appendChild(accordionItem);
+      });
+      
+      // Mostrar el menú acordeón
+      sideMenu.style.display = 'block';
     }
     
     // Inicializar Acordeón con Bootstrap
