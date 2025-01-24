@@ -15,7 +15,14 @@
   
   <!-- Custom CSS -->
   <style>
-    /* Fuentes y Colores */
+    /* ================== RESET BÁSICO ================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ================== ESTILOS GENERALES ================== */
     body {
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(135deg, #79F1A4 0%, #0E5CAD 100%);
@@ -54,6 +61,7 @@
       padding: 20px;
       margin-bottom: 20px;
       transition: all 0.3s ease;
+      flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
     }
     
     /* Sección de Consulta */
@@ -341,7 +349,8 @@
   
   <!-- Encabezado con Logo y Título -->
   <header class="header">
-    <img src="logo.webp" alt="Logo de El Centauro" loading="lazy">
+    <!-- Asegúrate de que la imagen Centauro3.png esté en la misma carpeta que este archivo HTML o ajusta la ruta según corresponda -->
+    <img src="Centauro3.png" alt="Logo de El Centauro" loading="lazy">
     <h1>Datos Actuales Open Key Residentes Barrio El Centauro</h1>
   </header>
   
@@ -355,8 +364,8 @@
         <input type="text" class="form-control" id="consulta" placeholder="Ejemplo: 12345678" aria-label="Número de Documento">
       </div>
       <div class="btn-row">
-        <button id="btnConsultar" class="btn btn-primary w-100">Consultar</button>
-        <button id="btnBorrar" class="btn btn-danger w-100">Borrar documento</button>
+        <button id="btnConsultar" class="btn btn-primary">Consultar</button>
+        <button id="btnBorrar" class="btn btn-danger">Borrar documento</button>
       </div>
       <div class="output mt-3" id="respuesta" aria-live="polite">
         <!-- Respuestas se mostrarán aquí -->
