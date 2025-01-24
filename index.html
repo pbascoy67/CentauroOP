@@ -36,7 +36,7 @@
 
     /* Contenedor para alinear .header y .container al mismo ancho */
     .wrapper {
-      max-width: 1000px; /* Ajusta el ancho máximo para acomodar la división en pantalla grande */
+      max-width: 1000px; /* Ajusta el ancho máximo para acomodar la disposición en pantallas grandes */
       width: 100%;
       margin: 0 auto;
       display: flex;
@@ -126,13 +126,14 @@
 
     /* ================== CONTENEDOR PRINCIPAL ================== */
     .container {
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.95);
       width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 25px;
       margin-bottom: 20px;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
     /* ================== SECCIONES ================== */
@@ -143,6 +144,7 @@
       font-weight: 700;
       display: inline-block;
       margin-bottom: 0.5rem;
+      font-size: 1.1rem;
     }
 
     /* ================== INPUTS ================== */
@@ -206,12 +208,12 @@
       margin-top: 1rem;
       background-color: #f9f9f9;
       border: 1px solid #eee;
-      border-radius: 4px;
-      padding: 15px;
+      border-radius: 8px;
+      padding: 20px;
       min-height: 80px;
       line-height: 1.6;
       font-size: 1rem; /* Aumentado a 1rem */
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: all 0.3s ease;
       overflow-wrap: break-word; /* Para evitar desbordamiento de texto */
     }
 
@@ -235,9 +237,11 @@
       border: 1px solid #ccc;
       padding: 10px;
       margin-bottom: 10px;
-      border-radius: 4px;
+      border-radius: 8px;
       /* El color de fondo se asignará dinámicamente desde JS */
       overflow-wrap: break-word;
+      background-color: rgba(255, 255, 255, 0.8);
+      transition: background-color 0.3s ease;
     }
 
     /* ================== MENÚ LATERAL (ACORDEÓN) PARA LÍDER ================== */
@@ -249,12 +253,13 @@
       background-color: #0E5CAD; /* Fondo azul */
       color: #fff;               /* Texto blanco */
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 8px;
       padding: 15px;
       display: none; /* Oculto por defecto, se mostrará cuando sea líder */
       z-index: 998; /* Menor que el botón de modo oscuro */
       max-height: 60vh; /* Para poder hacer scroll si el contenido es muy largo */
       overflow-y: auto;
+      transition: all 0.3s ease;
     }
 
     .side-menu h2 {
@@ -272,7 +277,7 @@
       background-color: #09406e; /* Azul más oscuro para el encabezado del acordeón */
       color: #fff;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       padding: 10px;
       font-weight: 700;
       cursor: pointer;
@@ -284,34 +289,34 @@
     }
     .accordion-content {
       display: none; /* Oculto por defecto */
-      padding: 8px;
+      padding: 10px;
       background-color: #0E5CAD; /* Misma tonalidad del menú */
       color: #fff;
       border: 1px solid #fff;
       border-top: none;
-      border-radius: 0 0 4px 4px;
+      border-radius: 0 0 8px 8px;
       font-size: 0.9rem;
       margin-bottom: 5px;
       max-height: 300px; /* Limita la altura para facilitar la lectura */
       overflow-y: auto;
-      transition: max-height 0.3s ease;
+      transition: all 0.3s ease;
     }
 
-    /* ================== DIVISIÓN DE LA PANTALLA AL SELECCIONAR Acordeón ================== */
-    .response-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    /* ================== BOTÓN VOLVER AL MENÚ ================== */
+    .back-button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #0E5CAD;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-
-    @media (min-width: 800px) {
-      .response-container.expand {
-        flex-direction: row;
-        align-items: flex-start;
-      }
-      .document-data, .accordion-response {
-        width: 48%;
-      }
+    .back-button:hover {
+      background-color: #09406e;
     }
 
     /* ================== RESPONSIVE ================== */
@@ -336,17 +341,11 @@
       .accordion-content {
         max-height: none; /* Permite expandirse completamente en móviles */
       }
-      .response-container.expand {
-        flex-direction: column;
-      }
-      .document-data, .accordion-response {
-        width: 100%;
-      }
     }
 
     /* ================== MEJORA SORPRESA: INTERFAZ MÁS LIMPIA Y ATRACTIVA ================== */
     .container {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.95);
       border-radius: 12px;
       padding: 25px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
@@ -359,19 +358,6 @@
       border-radius: 8px;
       padding: 20px;
       transition: all 0.3s ease;
-    }
-
-    .dependent-box {
-      background-color: rgba(255, 255, 255, 0.8);
-      transition: background-color 0.3s ease;
-    }
-
-    .accordion-header {
-      border-radius: 8px;
-    }
-
-    .accordion-content {
-      border-radius: 0 0 8px 8px;
     }
 
   </style>
@@ -552,12 +538,7 @@
       // Remover clase de expansión de la respuesta
       const responseContainer = document.querySelector('.response-container');
       if (responseContainer) {
-        responseContainer.classList.remove('expand');
-        // Remover contenido del acordeón seleccionado
-        const accordionResponse = document.querySelector('.accordion-response');
-        if (accordionResponse) {
-          accordionResponse.innerHTML = '';
-        }
+        responseContainer.remove();
       }
     }
 
@@ -679,7 +660,7 @@
         if (liderNombre) {
           // Recuadro para mostrar al líder
           respuestaHTML += `
-            <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:4px; background-color:#fafafa;">
+            <div class="dependent-box">
               <strong>Líder de grupo:</strong> ${liderNombre}
             </div>
           `;
@@ -775,49 +756,69 @@
       headers.forEach(header => {
         header.addEventListener('click', () => {
           const content = header.nextElementSibling;
-          // Alternar el display
+
           if (content.style.display === 'block') {
+            // Si ya está abierto, cerrarlo y restaurar el menú
             content.style.display = 'none';
-            // Remover la sección de contenido del acordeón
-            const accordionResponse = document.querySelector('.accordion-response');
-            if (accordionResponse) {
-              accordionResponse.innerHTML = '';
-              const responseContainer = document.querySelector('.response-container');
-              responseContainer.classList.remove('expand');
-            }
+            mostrarSideMenu();
           } else {
             // Cerrar cualquier otro contenido abierto
             document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
-            document.querySelectorAll('.accordion-response').forEach(r => r.innerHTML = '');
-            // Abrir el contenido seleccionado
+
+            // Mostrar el contenido seleccionado
             content.style.display = 'block';
 
-            // Dividir la pantalla en dos secciones
-            const responseContainer = document.createElement('div');
-            responseContainer.classList.add('response-container', 'expand');
-
-            // Obtener los datos del documento
-            const documentData = document.getElementById('respuesta').innerHTML;
-
-            // Crear contenedor para los datos del documento
-            const docDataDiv = document.createElement('div');
-            docDataDiv.classList.add('document-data');
-            docDataDiv.innerHTML = documentData;
-
-            // Crear contenedor para el contenido del acordeón
-            const accordionContentDiv = document.createElement('div');
-            accordionContentDiv.classList.add('accordion-response');
-            accordionContentDiv.innerHTML = content.innerHTML;
-
-            // Limpiar la respuesta actual y agregar la división
-            const respuesta = document.getElementById('respuesta');
-            respuesta.innerHTML = '';
-            responseContainer.appendChild(docDataDiv);
-            responseContainer.appendChild(accordionContentDiv);
-            respuesta.appendChild(responseContainer);
+            // Ocultar el menú y mostrar el contenido del acordeón
+            ocultarSideMenu();
+            mostrarAccordionContent(header.textContent, content.innerHTML);
           }
         });
       });
+    }
+
+    function ocultarSideMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      sideMenu.style.display = 'none';
+    }
+
+    function mostrarSideMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      sideMenu.style.display = 'block';
+    }
+
+    function mostrarAccordionContent(titulo, contenido) {
+      const respuesta = document.getElementById('respuesta');
+
+      // Limpiar la respuesta actual
+      respuesta.innerHTML = '';
+
+      // Crear contenedor para la pregunta y respuesta
+      const accordionResponseDiv = document.createElement('div');
+      accordionResponseDiv.classList.add('accordion-response');
+
+      // Añadir título y contenido
+      const tituloP = document.createElement('h2');
+      tituloP.textContent = titulo;
+      accordionResponseDiv.appendChild(tituloP);
+
+      const contenidoP = document.createElement('div');
+      contenidoP.innerHTML = contenido;
+      accordionResponseDiv.appendChild(contenidoP);
+
+      // Crear botón "Volver al Menú"
+      const backButton = document.createElement('button');
+      backButton.classList.add('back-button');
+      backButton.textContent = 'Volver al Menú';
+      backButton.addEventListener('click', () => {
+        // Restaurar el menú acordeón
+        mostrarSideMenu();
+        // Limpiar la respuesta
+        respuesta.innerHTML = document.getElementById('document-data').innerHTML;
+      });
+      accordionResponseDiv.appendChild(backButton);
+
+      // Añadir al área de respuesta
+      respuesta.appendChild(accordionResponseDiv);
     }
   </script>
 </body>
