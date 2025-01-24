@@ -1,228 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Datos Actuales Open Key Residentes Barrio El Centauro</title>
-
-  <!-- Fuente de Google para un mejor look & feel -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <!-- Librería para leer Excel (XLSX) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
+  <meta charset="UTF-8">
+  <title>Open Key Residentes Barrio El Centauro</title>
+  
+  <!-- Meta Tag para Responsividad -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <!-- Custom CSS -->
   <style>
-    /* ================== RESET BÁSICO ================== */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* ================== ESTILOS GENERALES ================== */
+    /* Fuentes y Colores */
     body {
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(135deg, #79F1A4 0%, #0E5CAD 100%);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 20px;
       color: #333;
       transition: background-color 0.3s ease, color 0.3s ease;
-      position: relative; /* Permite posicionar elementos fijos dentro, como el botón y el menú */
+      overflow-x: hidden; /* Evita el desplazamiento horizontal */
     }
-
-    /* Contenedor principal con flexbox para menú y contenido */
+    
+    /* Encabezado */
+    .header {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .header img {
+      max-width: 150px;
+      height: auto;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      margin-top: 10px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+      color: #fff;
+    }
+    
+    /* Contenedor Principal */
     .main-container {
       display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
       width: 100%;
-      max-width: 1200px; /* Ajusta según sea necesario */
+      max-width: 1200px;
       background-color: rgba(255, 255, 255, 0.95);
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      padding: 25px;
-      transition: all 0.3s ease;
-      flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
-    }
-
-    /* ================== ENCABEZADO CON LOGO ================== */
-    .header {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 20px;
       margin-bottom: 20px;
+      transition: all 0.3s ease;
     }
-    /* Dejar el logo con su tamaño original y ajustar tamaño si es necesario */
-    .header img {
-      height: auto;
-      max-width: 200px; /* Limita el ancho máximo del logo */
-      margin-bottom: 10px;
-    }
-    .header h1 {
-      color: #fff;
-      text-align: center;
-      font-size: 2rem;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-    }
-
-    /* ================== SECCIÓN DE CONSULTA ================== */
+    
+    /* Sección de Consulta */
     .consulta-section {
-      flex: 1 1 300px; /* Permite que se ajuste según el espacio disponible */
+      flex: 1;
       margin-right: 20px;
-      display: flex;
-      flex-direction: column;
     }
-    .consulta-section .section {
-      margin-bottom: 1.5rem;
+    .consulta-section label {
+      font-size: 1rem;
+      font-weight: 600;
     }
-    .consulta-section .section label {
-      font-weight: 700;
-      display: inline-block;
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
-    }
-
-    /* ================== INPUTS ================== */
     .consulta-section input[type="text"] {
-      width: 100%;
-      padding: 16px; /* Aumentado para mejor usabilidad */
+      font-size: 1rem;
+      padding: 12px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      outline: none;
-      font-size: 1.2rem; /* Aumentado para mejor legibilidad */
-      transition: background-color 0.3s ease, color 0.3s ease;
     }
-
-    /* ================== BOTONES ================== */
-    .consulta-section .btn-row {
+    .btn-row {
       margin-top: 10px;
       display: flex;
-      gap: 10px; /* Separación entre botones */
-      flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas pequeñas */
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    .consulta-section button {
+    .btn-row button {
       flex: 1 1 45%; /* Botones ocupan aproximadamente la mitad del ancho disponible */
-      padding: 12px 24px; /* Aumentado para mejor usabilidad */
-      background-color: #0E5CAD;
-      border: none;
-      border-radius: 4px;
-      color: #fff;
-      font-weight: 700;
       font-size: 1rem;
+      padding: 12px;
+      border-radius: 4px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
-    .consulta-section button:hover {
-      background-color: #09406e;
-    }
-
-    /* ================== ÁREA DE RESPUESTA ================== */
+    
+    /* Sección de Respuesta */
     .response-section {
-      flex: 1 1 300px; /* Permite que se ajuste según el espacio disponible */
-      display: flex;
-      flex-direction: column;
-      margin-top: 20px;
+      flex: 1;
     }
-    .response-section .output {
-      margin-top: 1rem;
+    .output {
       background-color: #f9f9f9;
       border: 1px solid #eee;
       border-radius: 8px;
-      padding: 20px;
-      min-height: 80px;
-      line-height: 1.6;
-      font-size: 1rem; /* Aumentado para mejor legibilidad */
-      transition: all 0.3s ease;
-      overflow-wrap: break-word; /* Para evitar desbordamiento de texto */
+      padding: 15px;
+      min-height: 100px;
+      font-size: 1rem;
+      line-height: 1.5;
+      overflow-wrap: break-word;
     }
-
-    /* ================== TEXTO PARPADEANTE ================== */
-    .blink {
-      color: #ff0000;
-      font-weight: 700;
-      animation: blink 1s infinite;
-      margin-bottom: 10px;
-      display: inline-block;
-      font-size: 1.3rem; /* 15% más grande de lo normal */
-    }
-    @keyframes blink {
-      50% {
-        opacity: 0;
-      }
-    }
-
-    /* ================== RECUADROS PARA DATOS DE DEPENDIENTES ================== */
+    
+    /* Recuadros para Dependientes y Líderes */
     .dependent-box {
       border: 1px solid #ccc;
+      border-radius: 8px;
       padding: 10px;
       margin-bottom: 10px;
-      border-radius: 8px;
-      /* El color de fondo se asignará dinámicamente desde JS */
-      overflow-wrap: break-word;
       background-color: rgba(255, 255, 255, 0.8);
       transition: background-color 0.3s ease;
     }
-
-    /* ================== MENÚ LATERAL (ACORDEÓN) PARA LÍDER ================== */
+    
+    /* Menú Acordeón */
     .side-menu {
-      width: 300px; /* Ajusta según sea necesario */
-      background-color: #0E5CAD; /* Fondo azul */
-      color: #fff;               /* Texto blanco */
-      border: 1px solid #ccc;
+      width: 300px;
+      background-color: #0E5CAD;
+      color: #fff;
       border-radius: 8px;
       padding: 15px;
-      display: none; /* Oculto por defecto, se mostrará cuando sea líder */
-      z-index: 998; /* Menor que el botón de modo oscuro */
-      max-height: 80vh; /* Para poder hacer scroll si el contenido es muy largo */
+      display: none; /* Oculto por defecto */
+      max-height: 80vh;
       overflow-y: auto;
       transition: all 0.3s ease;
-      flex-shrink: 0; /* Evita que se reduzca el ancho del menú */
     }
-
     .side-menu h2 {
-      margin-bottom: 10px;
       font-size: 1.2rem;
-    }
-
-    /* Acordeón */
-    .accordion-item {
-      margin-bottom: 10px; /* Espacio uniforme entre todos los puntos */
+      margin-bottom: 10px;
     }
     .accordion-header {
       width: 100%;
-      text-align: left;
-      background-color: #09406e; /* Azul más oscuro para el encabezado del acordeón */
+      background-color: #09406e;
       color: #fff;
+      padding: 10px;
       border: none;
       border-radius: 8px;
-      padding: 10px;
+      text-align: left;
+      font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      font-size: 1rem;
       transition: background-color 0.3s ease;
     }
-    .accordion-header:hover {
+    .accordion-header:hover,
+    .accordion-header:focus {
       background-color: #0B4F9E;
+      outline: none;
     }
     .accordion-content {
-      display: none; /* Oculto por defecto */
-      padding: 10px;
-      background-color: #0E5CAD; /* Misma tonalidad del menú */
+      display: none;
+      background-color: #0E5CAD;
       color: #fff;
-      border: 1px solid #fff;
+      padding: 10px;
       border-top: none;
       border-radius: 0 0 8px 8px;
       font-size: 0.95rem;
-      margin-bottom: 5px;
-      max-height: 300px; /* Limita la altura para facilitar la lectura */
+      max-height: 300px;
       overflow-y: auto;
       transition: all 0.3s ease;
     }
-
-    /* ================== BOTÓN VOLVER AL MENÚ ================== */
+    
+    /* Botón Volver al Menú */
     .back-button {
       margin-top: 15px;
       padding: 10px 20px;
@@ -234,13 +169,14 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      align-self: flex-start;
     }
-    .back-button:hover {
+    .back-button:hover,
+    .back-button:focus {
       background-color: #09406e;
+      outline: none;
     }
-
-    /* ================== BOTÓN MODO OSCURO (parte inferior derecha) ================== */
+    
+    /* Botón Modo Oscuro */
     #toggleDarkMode {
       position: fixed;
       bottom: 20px;
@@ -252,88 +188,42 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999; /* Para que quede por encima del menú */
       background-color: #0E5CAD;
       color: #fff;
       border: none;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      z-index: 9999;
     }
-    #toggleDarkMode:hover {
+    #toggleDarkMode:hover,
+    #toggleDarkMode:focus {
       background-color: #09406e;
+      outline: none;
     }
-
-    /* ================== RESPONSIVE ================== */
-    @media (max-width: 1000px) {
-      .main-container {
-        flex-direction: column;
-      }
-      .consulta-section {
-        margin-right: 0;
-      }
-      .side-menu {
-        width: 100%;
-        margin-top: 20px;
-      }
+    
+    /* Texto Parpadeante */
+    .blink {
+      color: #ff0000;
+      font-weight: 700;
+      animation: blink 1s infinite;
+      margin-bottom: 10px;
+      display: inline-block;
+      font-size: 1.3rem;
     }
-
-    @media (max-width: 600px) {
-      .header img {
-        max-width: 150px;
-      }
-      .header h1 {
-        font-size: 1.5rem;
-      }
-      .accordion-header {
-        font-size: 0.9rem;
-      }
-      .accordion-content {
-        font-size: 0.85rem;
-      }
-      .consulta-section button {
-        flex: 1 1 100%; /* Botones ocupan todo el ancho en móviles */
-      }
-      #toggleDarkMode {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-      }
-      .consulta-section input[type="text"] {
-        font-size: 1rem; /* Reducir ligeramente el tamaño de fuente en móviles */
-        padding: 14px; /* Ajustar padding para móviles */
-      }
-      .back-button {
-        font-size: 0.9rem;
-        padding: 8px 16px;
+    @keyframes blink {
+      50% {
+        opacity: 0;
       }
     }
-
-    /* ================== MEJORA SORPRESA: INTERFAZ MÁS LIMPIA Y ATRACTIVA ================== */
-    .container {
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
-    }
-
-    .output, .dependent-box {
-      background-color: #f9f9f9;
-      border: 1px solid #eee;
-      border-radius: 8px;
-      padding: 20px;
-      transition: all 0.3s ease;
-    }
-
-    /* ================== MODO OSCURO ================== */
+    
+    /* Modo Oscuro */
     .dark-mode {
-      background-color: #121212 !important; /* Fondo oscuro */
-      background-image: none !important;
-      color: #f1f1f1;
+      background-color: #121212 !important;
+      color: #f1f1f1 !important;
     }
     .dark-mode .main-container {
-      background-color: #1f1f1f;
-      color: #fff;
+      background-color: #1f1f1f !important;
+      color: #f1f1f1 !important;
     }
     .dark-mode .consulta-section input[type="text"] {
       background-color: #2c2c2c;
@@ -347,24 +237,24 @@
     .dark-mode .consulta-section button:hover {
       background-color: #666;
     }
-    .dark-mode .response-section .output {
+    .dark-mode .output {
       background-color: #2c2c2c;
       border: 1px solid #444;
       color: #fff;
     }
     .dark-mode .side-menu {
-      background-color: #333 !important;
-      color: #fff !important;
-      border: 1px solid #666 !important;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #666;
     }
     .dark-mode .accordion-header {
-      background-color: #444 !important;
-      color: #fff !important;
+      background-color: #444;
+      color: #fff;
     }
     .dark-mode .accordion-content {
-      background-color: #555 !important;
-      color: #fff !important;
-      border-color: #666 !important;
+      background-color: #555;
+      color: #fff;
+      border-color: #666;
     }
     .dark-mode .dependent-box {
       background-color: rgba(255, 255, 255, 0.1);
@@ -380,59 +270,128 @@
     .dark-mode .blink {
       color: #ff6666;
     }
-
+    
+    /* Responsividad Mejorada */
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      .consulta-section {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+      .side-menu {
+        width: 100%;
+      }
+      .btn-row button {
+        flex: 1 1 100%;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.4rem;
+      }
+      .consulta-section label {
+        font-size: 0.95rem;
+      }
+      .consulta-section input[type="text"] {
+        font-size: 0.95rem;
+        padding: 10px;
+      }
+      .btn-row button {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+      .side-menu h2 {
+        font-size: 1rem;
+      }
+      .accordion-header {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+      .accordion-content {
+        font-size: 0.85rem;
+        padding: 8px;
+      }
+      .back-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+      #toggleDarkMode {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+    }
+    
+    /* Animaciones Suaves */
+    .accordion-content.show {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <!-- Encabezado con Logo y Título -->
-    <div class="header">
-      <!-- Logo con su tamaño original y extensión corregida -->
-      <img src="./Centauro3.png" alt="Logo de El Centauro">
-      <h1>Datos Actuales Open Key Residentes Barrio El Centauro</h1>
-    </div>
-
-    <!-- Contenedor principal con flexbox para consulta y respuesta -->
-    <div class="main-container">
-      <!-- Sección de consulta por número de documento -->
-      <div class="consulta-section">
-        <div class="section">
-          <label for="consulta">Coloca un número de documento:</label>
-          <input type="text" id="consulta" placeholder="Coloca un número de documento">
-          <div class="btn-row">
-            <button id="btnConsultar">Consultar</button>
-            <button id="btnBorrar">Borrar documento</button>
-          </div>
-        </div>
-
-        <!-- Área donde se muestran las respuestas -->
-        <div class="output" id="respuesta"></div>
+  
+  <!-- Encabezado con Logo y Título -->
+  <header class="header">
+    <img src="logo.webp" alt="Logo de El Centauro" loading="lazy">
+    <h1>Datos Actuales Open Key Residentes Barrio El Centauro</h1>
+  </header>
+  
+  <!-- Contenedor Principal -->
+  <div class="container main-container">
+    
+    <!-- Sección de Consulta -->
+    <section class="consulta-section">
+      <div class="mb-3">
+        <label for="consulta" class="form-label">Coloca un número de documento:</label>
+        <input type="text" class="form-control" id="consulta" placeholder="Ejemplo: 12345678" aria-label="Número de Documento">
       </div>
-
-      <!-- Menú lateral (acordeón) para Líder de Grupo (invisible por defecto) -->
-      <div class="side-menu" id="sideMenu">
-        <h2>Información importante</h2>
-        <div class="accordion">
-
-          <!-- Punto 1: Preguntas frecuentes -->
-          <div class="accordion-item">
-            <button class="accordion-header">1. Preguntas frecuentes</button>
-            <div class="accordion-content">
-              <p>
-                Revisar que todos tus dependientes tengan un email válido y que no se repita con ningún otro, 
-                dado que será el usuario para ingresar a Open Key. Para agregar o modificar un email, 
-                ver el punto 4 del menú.<br><br>
-                Si necesitas dar de alta o baja un dependiente, no lo podrás hacer tú mismo; 
-                deberás enviar un correo al administrador pidiendo el cambio al siguiente email: 
-                <strong>elcentauroadm@gmail.com</strong>.
-              </p>
+      <div class="btn-row">
+        <button id="btnConsultar" class="btn btn-primary w-100">Consultar</button>
+        <button id="btnBorrar" class="btn btn-danger w-100">Borrar documento</button>
+      </div>
+      <div class="output mt-3" id="respuesta" aria-live="polite">
+        <!-- Respuestas se mostrarán aquí -->
+      </div>
+    </section>
+    
+    <!-- Menú Acordeón (Visible Solo para Líderes) -->
+    <aside class="side-menu" id="sideMenu" aria-label="Información Importante">
+      <h2>Información importante</h2>
+      <div class="accordion" id="accordionExample">
+        
+        <!-- Punto 1: Preguntas Frecuentes -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              1. Preguntas frecuentes
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              Revisar que todos tus dependientes tengan un email válido y que no se repita con ningún otro, dado que será el usuario para ingresar a Open Key. Para agregar o modificar un email, ver el punto 4 del menú.<br><br>
+              Si necesitas dar de alta o baja un dependiente, no lo podrás hacer tú mismo; deberás enviar un correo al administrador pidiendo el cambio al siguiente email: <strong>elcentauroadm@gmail.com</strong>.
             </div>
           </div>
-
-          <!-- Punto 2: Cómo bajar la app de Open Key -->
-          <div class="accordion-item">
-            <button class="accordion-header">2. Cómo bajar la app de Open Key</button>
-            <div class="accordion-content">
+        </div>
+        
+        <!-- Punto 2: Cómo Bajar la App de Open Key -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              2. Cómo bajar la app de Open Key
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
               <p>Para descargar la aplicación Open Key, elige el enlace correspondiente a tu sistema operativo:</p>
               <ul>
                 <li><a href="https://play.google.com/store/apps/details?id=com.openkey" target="_blank" rel="noopener noreferrer">Google Play Store (Android)</a></li>
@@ -445,89 +404,75 @@
               </ol>
             </div>
           </div>
-
-          <!-- Punto 3: Cómo sacarme la selfie -->
-          <div class="accordion-item">
-            <button class="accordion-header">3. Cómo sacarme la selfie</button>
-            <div class="accordion-content">
-              <p>
-                Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key 
-                pero grisado; se te avisará cuando sea el momento.
-              </p>
+        </div>
+        
+        <!-- Punto 3: Cómo Sacarme la Selfie -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              3. Cómo sacarme la selfie
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key pero grisado; se te avisará cuando sea el momento.
             </div>
           </div>
-
-          <!-- Punto 4: Cómo modificar los datos de mi grupo familiar -->
-          <div class="accordion-item">
-            <button class="accordion-header">4. Cómo modificar los datos de mi grupo familiar</button>
-            <div class="accordion-content">
-              <p>
-                Vos como Líder de grupo podés entrar a la aplicación de Open Key en la sección
-                <strong>Censo - Mi Grupo Familiar</strong> y, buscando por número de documento de tus
-                dependientes, podrás modificar los siguientes datos:
-              </p>
+        </div>
+        
+        <!-- Punto 4: Cómo Modificar los Datos de mi Grupo Familiar -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingFour">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              4. Cómo modificar los datos de mi grupo familiar
+            </button>
+          </h2>
+          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              Vos como Líder de grupo podés entrar a la aplicación de Open Key en la sección <strong>Censo - Mi Grupo Familiar</strong> y, buscando por número de documento de tus dependientes, podrás modificar los siguientes datos:
               <ul>
                 <li>Nombre y apellido (si está mal cargado).</li>
                 <li>Email (si no es correcto; este será el usuario para registrarse en la aplicación Open Key).</li>
                 <li>Teléfono (si está incorrecto o en blanco).</li>
                 <li>Relación de parentesco (si está incorrecta o en blanco).</li>
               </ul>
-              <p>
-                <strong>Nota:</strong> El email es el usuario para entrar a Open Key, por lo tanto,
-                aseguráte de que todos los dependientes tengan un email único.
-              </p>
+              <p><strong>Nota:</strong> El email es el usuario para entrar a Open Key, por lo tanto, aseguráte de que todos los dependientes tengan un email único.</p>
             </div>
           </div>
-
         </div>
+        
       </div>
-    </div>
+    </aside>
+    
   </div>
-
-  <!-- Botón fijo para Modo Oscuro en la parte inferior derecha -->
-  <button id="toggleDarkMode" title="Modo oscuro">🌙</button>
-
+  
+  <!-- Botón Modo Oscuro -->
+  <button id="toggleDarkMode" aria-label="Activar modo oscuro">
+    <i class="bi bi-moon"></i>
+  </button>
+  
+  <!-- Bootstrap JS (incluye Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Librería XLSX para leer archivos Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  
+  <!-- Custom JavaScript -->
   <script>
-    /*
-      ---------------------------------------------------------------------------------------
-      Columnas en el Excel (en este orden):
-      A: Documento
-      B: Nombre y apellido
-      C: Email
-      D: Grupoprimario
-      E: App
-      F: Resp
-
-      REGLAS DE RESPUESTA (resumidas):
-      1. Solo responder si hay un número en la consulta. De lo contrario:
-         "Solo estoy entrenado para contestar si colocas un número de documento."
-      2. Buscar en la base el número de Documento.
-         - Si no está: "El documento no existe en la base de datos de El Centauro."
-      3. Si "Resp" en blanco => Dependiente
-         - Mostrar: Documento, Nombre y Apellido, Email (o "No tienes email registrado."), Lote Nro. (2 dígitos de Grupoprimario)
-         - Mostrar líder de grupo (Resp = "SI") en un recuadro
-         - Si "App"="No", agregar "Nunca ha entrado aún a la app de Open Key."
-         - Fondo Verde claro
-      4. Si "Resp"="SI" => Líder
-         - Fondo Celeste claro
-         - Muestra "Sos Líder de Grupo" (parpadeante)
-         - Muestra sus datos
-         - Muestra dependientes en recuadros + contador de dependientes (cada recuadro con fondo pastel único)
-         - Despliega el menú lateral (sideMenu)
-      ---------------------------------------------------------------------------------------
-    */
-
-    let datosExcel = []; // Se almacenan los datos del Excel
-    const excelUrl = './data.xlsx'; // Ajusta a la ruta real de tu archivo XLSX
-
-    // Al cargar la página, leemos el Excel en segundo plano
-    window.addEventListener('DOMContentLoaded', () => {
-      cargarExcelFijo();
-      inicializarAcordeon();
+    // Variables Globales
+    let datosExcel = []; // Almacena los datos del Excel
+    const excelUrl = './data.xlsx'; // Ruta al archivo Excel
+    
+    // Al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarExcel();
       inicializarBotones();
+      inicializarAcordeon();
+      inicializarModoOscuro();
     });
-
-    function cargarExcelFijo() {
+    
+    // Cargar el archivo Excel
+    function cargarExcel() {
       fetch(excelUrl)
         .then(response => {
           if (!response.ok) {
@@ -539,84 +484,74 @@
           const workbook = XLSX.read(data, { type: 'array' });
           const firstSheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[firstSheetName];
-
-          // Convertimos la hoja a un array bidimensional
           datosExcel = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
           console.log("Archivo Excel cargado exitosamente.");
         })
         .catch(error => {
-          console.error("Error al cargar el Excel fijo:", error);
+          console.error("Error al cargar el Excel:", error);
+          mostrarMensaje("Error al cargar los datos. Por favor, inténtalo nuevamente más tarde.", "danger");
         });
     }
-
+    
+    // Inicializar botones de consulta y borrar
     function inicializarBotones() {
-      // Botón de consulta
-      document.getElementById('btnConsultar').addEventListener('click', function() {
-        realizarConsulta();
-      });
-      // Botón de borrar
-      document.getElementById('btnBorrar').addEventListener('click', function() {
-        borrarDocumento();
-      });
+      document.getElementById('btnConsultar').addEventListener('click', realizarConsulta);
+      document.getElementById('btnBorrar').addEventListener('click', borrarDocumento);
     }
-
+    
+    // Borrar Documento
     function borrarDocumento() {
       document.getElementById('consulta').value = '';
       document.getElementById('respuesta').innerHTML = '';
-      // Ocultar el menú acordeón
       document.getElementById('sideMenu').style.display = 'none';
-      // Remover clases de fondo
       document.body.classList.remove('bg-leader', 'bg-dependent');
-      // Remover contenido del acordeón si está presente
       const accordionResponse = document.querySelector('.accordion-response');
       if (accordionResponse) {
         accordionResponse.remove();
       }
     }
-
+    
+    // Realizar Consulta
     function realizarConsulta() {
       const consulta = document.getElementById('consulta').value.trim();
       const respuesta = document.getElementById('respuesta');
       const sideMenu = document.getElementById('sideMenu');
-      const consultaSection = document.querySelector('.consulta-section');
-
-      // Limpiar la respuesta previa y ocultar el menú
+      
+      // Limpiar respuesta previa y ocultar menú
       respuesta.innerHTML = "";
       sideMenu.style.display = 'none';
-
-      // Quitamos clases anteriores de fondo (líder/dependiente)
       document.body.classList.remove('bg-leader', 'bg-dependent');
-
-      // Verificar si hay datos cargados
+      
+      // Validar datos cargados
       if (!datosExcel || datosExcel.length === 0) {
-        respuesta.innerText = "No hay datos cargados. Revisa si el archivo Excel está correctamente disponible en el repositorio.";
+        mostrarMensaje("No hay datos cargados. Revisa si el archivo Excel está correctamente disponible.", "warning");
         return;
       }
-
-      // Extraer el número de documento de la consulta (uno o más dígitos)
+      
+      // Validar entrada (solo números)
       const regexDoc = /^(\d+)$/;
       const match = consulta.match(regexDoc);
       if (!match) {
-        respuesta.innerText = "Solo estoy entrenado para contestar si colocas un número de documento.";
+        mostrarMensaje("Solo estoy entrenado para contestar si colocas un número de documento.", "warning");
         return;
       }
       const numeroDocumento = match[1];
-
-      // Identificar columnas en la primera fila
+      
+      // Identificar columnas
       const headers = datosExcel[0].map(h => (h || '').toString().trim().toLowerCase());
-      const colDoc   = headers.indexOf("documento");
-      const colNom   = headers.indexOf("nombre y apellido");
+      const colDoc = headers.indexOf("documento");
+      const colNom = headers.indexOf("nombre y apellido");
       const colEmail = headers.indexOf("email");
       const colGrupo = headers.indexOf("grupoprimario");
-      const colApp   = headers.indexOf("app");
-      const colResp  = headers.indexOf("resp");
-
+      const colApp = headers.indexOf("app");
+      const colResp = headers.indexOf("resp");
+      
       if ([colDoc, colNom, colEmail, colGrupo, colApp, colResp].includes(-1)) {
-        respuesta.innerText = "El archivo Excel no contiene las columnas requeridas (Documento, Nombre y apellido, Email, Grupoprimario, App, Resp).";
+        mostrarMensaje("El archivo Excel no contiene las columnas requeridas (Documento, Nombre y apellido, Email, Grupoprimario, App, Resp).", "danger");
         return;
       }
-
-      // Buscar la fila con el documento
+      
+      // Buscar fila correspondiente
       let filaEncontrada = null;
       for (let i = 1; i < datosExcel.length; i++) {
         const fila = datosExcel[i];
@@ -627,58 +562,50 @@
           break;
         }
       }
-
-      // Si no se encontró, avisar
+      
       if (!filaEncontrada) {
-        respuesta.innerText = "El documento no existe en la base de datos de El Centauro.";
+        mostrarMensaje("El documento no existe en la base de datos de El Centauro.", "warning");
         return;
       }
-
-      // Extraer valores de la fila
-      const valDoc    = filaEncontrada[colDoc]   ? filaEncontrada[colDoc].toString().trim()   : "";
-      const valNom    = filaEncontrada[colNom]   ? filaEncontrada[colNom].toString().trim()   : "";
-      const valEmail  = filaEncontrada[colEmail] ? filaEncontrada[colEmail].toString().trim() : "";
-      const valGrupo  = filaEncontrada[colGrupo] ? filaEncontrada[colGrupo].toString().trim() : "";
-      const valApp    = filaEncontrada[colApp]   ? filaEncontrada[colApp].toString().trim()   : "";
-      const valResp   = filaEncontrada[colResp]  ? filaEncontrada[colResp].toString().trim().toUpperCase() : "";
-
-      // Lote Nro = 2 primeros dígitos de Grupoprimario
+      
+      // Extraer datos
+      const valDoc = filaEncontrada[colDoc] ? filaEncontrada[colDoc].toString().trim() : "";
+      const valNom = filaEncontrada[colNom] ? filaEncontrada[colNom].toString().trim() : "";
+      const valEmail = filaEncontrada[colEmail] ? filaEncontrada[colEmail].toString().trim() : "";
+      const valGrupo = filaEncontrada[colGrupo] ? filaEncontrada[colGrupo].toString().trim() : "";
+      const valApp = filaEncontrada[colApp] ? filaEncontrada[colApp].toString().trim() : "";
+      const valResp = filaEncontrada[colResp] ? filaEncontrada[colResp].toString().trim().toUpperCase() : "";
+      
       const loteNro = valGrupo.length >= 2 ? valGrupo.substring(0,2) : valGrupo;
-
-      // Funciones para formatear cada línea con <strong>
-      function linea(label, valor) {
+      
+      // Función para crear líneas con etiquetas fuertes
+      function crearLinea(label, valor) {
         return `<strong>${label}:</strong> ${valor}<br>`;
       }
-      function lineaExtra(texto) {
-        return `${texto}<br>`;
-      }
-
-      // Construimos la respuesta final
+      
+      // Construir respuesta
       let respuestaHTML = "";
-
-      // Muestra datos básicos (Documento, Nombre, Email, Lote)
+      
       function datosBasicos(doc, nom, mail, lote) {
-        let txt = "";
-        txt += linea("Documento", doc);
-        txt += linea("Nombre y apellido", nom);
+        let texto = "";
+        texto += crearLinea("Documento", doc);
+        texto += crearLinea("Nombre y apellido", nom);
         if (mail === "") {
-          txt += lineaExtra("No tienes email registrado.");
+          texto += "No tienes email registrado.<br>";
         } else {
-          txt += linea("Email", mail);
+          texto += crearLinea("Email", mail);
         }
-        txt += linea("Lote Nro.", lote);
-        txt += "<br>";
-        return txt;
+        texto += crearLinea("Lote Nro.", lote);
+        texto += "<br>";
+        return texto;
       }
-
-      // CASO 1: Resp en blanco => Dependiente
+      
       if (valResp === "") {
-        // Fondo verde claro
+        // Dependiente
         document.body.classList.add('bg-dependent');
-
         respuestaHTML += datosBasicos(valDoc, valNom, valEmail, loteNro);
-
-        // Buscar Líder de grupo => mismo "Grupoprimario", "Resp" = "SI"
+        
+        // Buscar líder de grupo
         let liderNombre = "";
         for (let i = 1; i < datosExcel.length; i++) {
           const f = datosExcel[i];
@@ -691,163 +618,119 @@
           }
         }
         if (liderNombre) {
-          // Recuadro para mostrar al líder
           respuestaHTML += `
             <div class="dependent-box">
               <strong>Líder de grupo:</strong> ${liderNombre}
             </div>
           `;
         } else {
-          respuestaHTML += lineaExtra("No se encontró un líder de grupo para tu lote.");
+          respuestaHTML += "No se encontró un líder de grupo para tu lote.<br>";
         }
+        
         if (valApp.toLowerCase() === "no") {
-          respuestaHTML += lineaExtra("Nunca ha entrado aún a la app de Open Key.");
+          respuestaHTML += "Nunca ha entrado aún a la app de Open Key.<br>";
         }
-
-      // CASO 2: Resp = "SI" => Líder
+        
       } else if (valResp === "SI") {
-        // Fondo celeste claro
+        // Líder
         document.body.classList.add('bg-leader');
-
-        // Muestra cartel parpadeante “Sos Líder de Grupo”
         respuestaHTML += `<div class="blink">Sos Líder de Grupo</div><br>`;
-
-        // Datos del líder
         respuestaHTML += datosBasicos(valDoc, valNom, valEmail, loteNro);
-
-        // Listar dependientes => misma "Grupoprimario", "Resp" en blanco
+        
+        // Listar dependientes
         let dependientesHTML = "";
         let contadorDependientes = 0;
-
-        // Paleta de colores pastel
-        const pastelColors = [
-          "#FFB3BA","#FFDFBA","#FFFFBA","#BAFFC9","#BAE1FF",
-          "#FFC9DE","#F1C0E8","#E2F0CB","#FDEED9"
-        ];
-        let colorIndex = 0; // Para ir rotando los colores
-
+        const pastelColors = ["#FFB3BA","#FFDFBA","#FFFFBA","#BAFFC9","#BAE1FF","#FFC9DE","#F1C0E8","#E2F0CB","#FDEED9"];
+        let colorIndex = 0;
+        
         for (let i = 1; i < datosExcel.length; i++) {
           const f = datosExcel[i];
           const gp = f[colGrupo] ? f[colGrupo].toString().trim() : "";
-          const rp = f[colResp]  ? f[colResp].toString().trim().toUpperCase() : "";
+          const rp = f[colResp] ? f[colResp].toString().trim().toUpperCase() : "";
           if (gp === valGrupo && rp === "") {
             contadorDependientes++;
-            // Extraer info dependiente
-            const dDoc   = f[colDoc]   ? f[colDoc].toString().trim() : "";
-            const dNom   = f[colNom]   ? f[colNom].toString().trim() : "";
+            const dDoc = f[colDoc] ? f[colDoc].toString().trim() : "";
+            const dNom = f[colNom] ? f[colNom].toString().trim() : "";
             const dEmail = f[colEmail] ? f[colEmail].toString().trim() : "";
-            const dApp   = f[colApp]   ? f[colApp].toString().trim() : "";
-            const dLote  = gp.length >= 2 ? gp.substring(0,2) : gp;
-
-            // Color pastel para este dependiente
-            let colorFondo = pastelColors[colorIndex % pastelColors.length];
+            const dApp = f[colApp] ? f[colApp].toString().trim() : "";
+            const dLote = gp.length >= 2 ? gp.substring(0,2) : gp;
+            
+            const colorFondo = pastelColors[colorIndex % pastelColors.length];
             colorIndex++;
-
-            // Recuadro para cada dependiente con color de fondo distinto
-            let dependienteBox = `<div class="dependent-box" style="background-color:${colorFondo};">`;
-            dependienteBox += linea("Documento", dDoc);
-            dependienteBox += linea("Nombre y apellido", dNom);
-            if (dEmail === "") {
-              dependienteBox += lineaExtra("No tienes email registrado.");
-            } else {
-              dependienteBox += linea("Email", dEmail);
-            }
-            dependienteBox += linea("Lote Nro.", dLote);
-
-            if (dApp.toLowerCase() === "no") {
-              dependienteBox += lineaExtra("Nunca ha entrado aún a la app de Open Key.");
-            }
-            dependienteBox += "</div>";
-
-            dependientesHTML += dependienteBox;
+            
+            dependientesHTML += `
+              <div class="dependent-box" style="background-color:${colorFondo};">
+                ${crearLinea("Documento", dDoc)}
+                ${crearLinea("Nombre y apellido", dNom)}
+                ${dEmail === "" ? "No tienes email registrado.<br>" : crearLinea("Email", dEmail)}
+                ${crearLinea("Lote Nro.", dLote)}
+                ${dApp.toLowerCase() === "no" ? "Nunca ha entrado aún a la app de Open Key.<br>" : ""}
+              </div>
+            `;
           }
         }
-
+        
         if (contadorDependientes > 0) {
-          respuestaHTML += lineaExtra(`Cantidad de dependientes: ${contadorDependientes}`);
+          respuestaHTML += `Cantidad de dependientes: ${contadorDependientes}<br>`;
           respuestaHTML += dependientesHTML;
         } else {
-          respuestaHTML += lineaExtra("No tienes dependientes registrados en tu grupo.");
+          respuestaHTML += "No tienes dependientes registrados en tu grupo.<br>";
         }
-
-        // Mostrar el menú lateral
+        
+        // Mostrar menú acordeón
         sideMenu.style.display = 'block';
       }
-
-      // Mostrar la respuesta final en formato HTML
+      
+      // Mostrar la respuesta
       respuesta.innerHTML = respuestaHTML;
     }
-
-    // Botón para modo oscuro (fijo abajo a la derecha)
-    document.getElementById('toggleDarkMode').addEventListener('click', function() {
-      document.body.classList.toggle('dark-mode');
-    });
-
-    // Inicializar comportamiento del acordeón
+    
+    // Mostrar Mensajes
+    function mostrarMensaje(mensaje, tipo) {
+      const respuesta = document.getElementById('respuesta');
+      respuesta.innerHTML = `
+        <div class="alert alert-${tipo}" role="alert">
+          ${mensaje}
+        </div>
+      `;
+    }
+    
+    // Inicializar Acordeón con Bootstrap
     function inicializarAcordeon() {
-      const headers = document.querySelectorAll('.accordion-header');
-      headers.forEach(header => {
-        header.addEventListener('click', () => {
-          const content = header.nextElementSibling;
-
-          if (content.style.display === 'block') {
-            // Si ya está abierto, cerrarlo
-            content.style.display = 'none';
-          } else {
-            // Cerrar cualquier otro contenido abierto
-            document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
-
-            // Abrir el contenido seleccionado
-            content.style.display = 'block';
-
-            // Mostrar el contenido en el área de respuesta y ocultar el menú
-            mostrarContenidoAcordeon(header.textContent, content.innerHTML);
-          }
-        });
+      // Bootstrap maneja automáticamente el comportamiento del acordeón
+      // No se requiere código adicional aquí a menos que se quiera personalizar
+    }
+    
+    // Inicializar Modo Oscuro
+    function inicializarModoOscuro() {
+      const toggleDarkMode = document.getElementById('toggleDarkMode');
+      toggleDarkMode.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        // Cambiar ícono
+        const icon = toggleDarkMode.querySelector('i');
+        if (document.body.classList.contains('dark-mode')) {
+          icon.classList.remove('bi-moon');
+          icon.classList.add('bi-sun');
+        } else {
+          icon.classList.remove('bi-sun');
+          icon.classList.add('bi-moon');
+        }
       });
     }
-
-    function mostrarContenidoAcordeon(titulo, contenido) {
-      const respuesta = document.getElementById('respuesta');
-      const sideMenu = document.getElementById('sideMenu');
-      const consultaSection = document.querySelector('.consulta-section');
-
-      // Ocultar el menú acordeón
-      sideMenu.style.display = 'none';
-
-      // Guardar el contenido actual de la consulta para restaurarlo más tarde
-      const consultaContent = consultaSection.innerHTML;
-
-      // Crear contenedor para la pregunta y respuesta
-      const accordionResponseDiv = document.createElement('div');
-      accordionResponseDiv.classList.add('accordion-response');
-
-      // Añadir título y contenido
-      const tituloP = document.createElement('h2');
-      tituloP.textContent = titulo;
-      accordionResponseDiv.appendChild(tituloP);
-
-      const contenidoP = document.createElement('div');
-      contenidoP.innerHTML = contenido;
-      accordionResponseDiv.appendChild(contenidoP);
-
-      // Crear botón "Volver al Menú"
-      const backButton = document.createElement('button');
-      backButton.classList.add('back-button');
-      backButton.textContent = 'Volver al Menú';
-      backButton.addEventListener('click', () => {
-        // Mostrar el menú acordeón
-        sideMenu.style.display = 'block';
-        // Limpiar el contenido del acordeón
-        accordionResponseDiv.remove();
-        // Restaurar el contenido de la consulta
-        consultaSection.innerHTML = consultaContent;
+    
+    // Service Worker para Soporte Offline
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('Service Worker registrado con éxito:', registration);
+          })
+          .catch(error => {
+            console.log('Error al registrar el Service Worker:', error);
+          });
       });
-      accordionResponseDiv.appendChild(backButton);
-
-      // Añadir al área de respuesta
-      respuesta.appendChild(accordionResponseDiv);
     }
   </script>
+  
 </body>
 </html>
