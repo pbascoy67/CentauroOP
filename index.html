@@ -108,9 +108,10 @@
       align-items: center;
       margin-bottom: 20px;
     }
-    /* Dejar el logo con su tamaño original */
+    /* Dejar el logo con su tamaño original y ajustar tamaño si es necesario */
     .header img {
       height: auto;
+      max-width: 200px; /* Limita el ancho máximo del logo */
       margin-bottom: 10px;
     }
     .header h1 {
@@ -144,11 +145,11 @@
     /* ================== INPUTS ================== */
     input[type="text"] {
       width: 100%;
-      padding: 8px;
+      padding: 12px; /* Aumentado de 8px a 12px */
       border: 1px solid #ccc;
       border-radius: 4px;
       outline: none;
-      font-size: 1rem;
+      font-size: 1.1rem; /* Aumentado de 1rem a 1.1rem */
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -157,6 +158,7 @@
       margin-top: 10px;
       display: flex;
       gap: 10px; /* Separación entre botones */
+      flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas pequeñas */
     }
     button {
       padding: 10px 20px;
@@ -186,6 +188,14 @@
       align-items: center;
       justify-content: center;
       z-index: 9999; /* Para que quede por encima del menú */
+      background-color: #0E5CAD;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #toggleDarkMode:hover {
+      background-color: #09406e;
     }
 
     /* ================== ÁREA DE RESPUESTA ================== */
@@ -199,6 +209,7 @@
       line-height: 1.6;
       font-size: 0.95rem;
       transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-wrap: break-word; /* Para evitar desbordamiento de texto */
     }
 
     /* ================== TEXTO PARPADEANTE ================== */
@@ -223,6 +234,7 @@
       margin-bottom: 10px;
       border-radius: 4px;
       /* El color de fondo se asignará dinámicamente desde JS */
+      overflow-wrap: break-word;
     }
 
     /* ================== MENÚ LATERAL (ACORDEÓN) PARA LÍDER ================== */
@@ -237,7 +249,7 @@
       border-radius: 4px;
       padding: 15px;
       display: none; /* Oculto por defecto, se mostrará cuando sea líder */
-      z-index: 999; 
+      z-index: 998; /* Menor que el botón de modo oscuro */
       max-height: 60vh; /* Para poder hacer scroll si el contenido es muy largo */
       overflow-y: auto;
     }
@@ -262,6 +274,10 @@
       font-weight: 700;
       cursor: pointer;
       font-size: 0.95rem;
+      transition: background-color 0.3s ease;
+    }
+    .accordion-header:hover {
+      background-color: #0B4F9E;
     }
     .accordion-content {
       display: none; /* Oculto por defecto */
@@ -273,6 +289,9 @@
       border-radius: 0 0 4px 4px;
       font-size: 0.9rem;
       margin-bottom: 5px;
+      max-height: 300px; /* Limita la altura para facilitar la lectura */
+      overflow-y: auto;
+      transition: max-height 0.3s ease;
     }
 
     /* ================== RESPONSIVE ================== */
@@ -281,7 +300,7 @@
         padding: 0 10px;
       }
       button {
-        width: auto;
+        width: 100%; /* Botones ocupan todo el ancho disponible */
       }
       #toggleDarkMode {
         width: 40px;
@@ -294,6 +313,9 @@
         left: 10px;
         width: 180px;
       }
+      .accordion-content {
+        max-height: none; /* Permite expandirse completamente en móviles */
+      }
     }
   </style>
 </head>
@@ -301,8 +323,8 @@
   <div class="wrapper">
     <!-- Encabezado con Logo y Título -->
     <div class="header">
-      <!-- Logo con su tamaño original -->
-      <img src="./Centauro3.jpg" alt="Logo de El Centauro">
+      <!-- Logo con su tamaño original y extensión corregida -->
+      <img src="./Centauro3.png" alt="Logo de El Centauro">
       <h1>Datos Actuales Open Key Residentes Barrio El Centauro</h1>
     </div>
 
@@ -356,9 +378,9 @@
         <button class="accordion-header">3. Cómo sacarme la selfie</button>
         <div class="accordion-content">
           <p>
-            Aun la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key 
+            Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key 
             pero grisado; se te avisará cuando sea el momento.
-            </p>
+          </p>
         </div>
       </div>
 
@@ -367,7 +389,7 @@
         <button class="accordion-header">4. Cómo modificar los datos de mi grupo familiar</button>
         <div class="accordion-content">
           <p>
-            Vos como Líder de grupo podes entrar a la aplicación de Open Key en la sección
+            Vos como Líder de grupo podés entrar a la aplicación de Open Key en la sección
             <strong>Censo - Mi Grupo Familiar</strong> y, buscando por número de documento de tus
             dependientes, podrás modificar los siguientes datos:
           </p>
@@ -459,9 +481,17 @@
       });
       // Botón de borrar
       document.getElementById('btnBorrar').addEventListener('click', function() {
-        document.getElementById('consulta').value = '';
-        document.getElementById('respuesta').innerHTML = '';
+        borrarDocumento();
       });
+    }
+
+    function borrarDocumento() {
+      document.getElementById('consulta').value = '';
+      document.getElementById('respuesta').innerHTML = '';
+      // Ocultar el menú acordeón
+      document.getElementById('sideMenu').style.display = 'none';
+      // Remover clases de fondo
+      document.body.classList.remove('bg-leader', 'bg-dependent');
     }
 
     function realizarConsulta() {
@@ -483,13 +513,13 @@
       }
 
       // Extraer el número de documento de la consulta (uno o más dígitos)
-      const regexDoc = /(\d+)/;
+      const regexDoc = /^(\d+)$/;
       const match = consulta.match(regexDoc);
       if (!match) {
         respuesta.innerText = "Solo estoy entrenado para contestar si colocas un número de documento.";
         return;
       }
-      const numeroDocumento = match[0];
+      const numeroDocumento = match[1];
 
       // Identificar columnas en la primera fila
       const headers = datosExcel[0].map(h => (h || '').toString().trim().toLowerCase());
@@ -598,9 +628,6 @@
         // Fondo celeste claro
         document.body.classList.add('bg-leader');
 
-        // Mostramos el menú lateral
-        sideMenu.style.display = 'block';
-
         // Muestra cartel parpadeante “Sos Líder de Grupo”
         respuestaHTML += `<div class="blink">Sos Líder de Grupo</div><br>`;
 
@@ -661,6 +688,9 @@
         } else {
           respuestaHTML += lineaExtra("No tienes dependientes registrados en tu grupo.");
         }
+
+        // Mostrar el menú lateral
+        sideMenu.style.display = 'block';
       }
 
       // Mostrar la respuesta final en formato HTML
