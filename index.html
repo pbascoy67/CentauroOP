@@ -306,7 +306,6 @@
       padding: 20px;
       transition: all 0.3s ease;
     }
-
   </style>
 </head>
 <body>
@@ -359,7 +358,16 @@
           <div class="accordion-item">
             <button class="accordion-header">2. Cómo bajar la app de Open Key</button>
             <div class="accordion-content">
-              <p>Instrucciones para descargar la aplicación en diferentes dispositivos.</p>
+              <p>Para descargar la aplicación Open Key, elige el enlace correspondiente a tu sistema operativo:</p>
+              <ul>
+                <li><a href="https://play.google.com/store/apps/details?id=com.openkey" target="_blank" rel="noopener noreferrer">Google Play Store (Android)</a></li>
+                <li><a href="https://apps.apple.com/ar/app/openkey/id1326856476" target="_blank" rel="noopener noreferrer">Apple App Store (iPhone)</a></li>
+              </ul>
+              <p>Para activar la aplicación, asegúrate de cumplir con los siguientes requisitos:</p>
+              <ol>
+                <li>Estar registrado en la base de Open Key.</li>
+                <li>Tener un correo electrónico válido.</li>
+              </ol>
             </div>
           </div>
 
@@ -484,12 +492,18 @@
       document.getElementById('sideMenu').style.display = 'none';
       // Remover clases de fondo
       document.body.classList.remove('bg-leader', 'bg-dependent');
+      // Remover contenido del acordeón si está presente
+      const accordionResponse = document.querySelector('.accordion-response');
+      if (accordionResponse) {
+        accordionResponse.remove();
+      }
     }
 
     function realizarConsulta() {
       const consulta = document.getElementById('consulta').value.trim();
       const respuesta = document.getElementById('respuesta');
       const sideMenu = document.getElementById('sideMenu');
+      const consultaSection = document.querySelector('.consulta-section');
 
       // Limpiar la respuesta previa y ocultar el menú
       respuesta.innerHTML = "";
@@ -721,9 +735,13 @@
     function mostrarContenidoAcordeon(titulo, contenido) {
       const respuesta = document.getElementById('respuesta');
       const sideMenu = document.getElementById('sideMenu');
+      const consultaSection = document.querySelector('.consulta-section');
 
       // Ocultar el menú acordeón
       sideMenu.style.display = 'none';
+
+      // Guardar el contenido actual de la consulta para restaurarlo más tarde
+      const consultaContent = consultaSection.innerHTML;
 
       // Crear contenedor para la pregunta y respuesta
       const accordionResponseDiv = document.createElement('div');
@@ -745,8 +763,10 @@
       backButton.addEventListener('click', () => {
         // Mostrar el menú acordeón
         sideMenu.style.display = 'block';
-        // Remover el contenido del acordeón
+        // Limpiar el contenido del acordeón
         accordionResponseDiv.remove();
+        // Restaurar el contenido de la consulta
+        consultaSection.innerHTML = consultaContent;
       });
       accordionResponseDiv.appendChild(backButton);
 
