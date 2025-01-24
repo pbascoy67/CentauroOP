@@ -34,73 +34,16 @@
       position: relative; /* Permite posicionar elementos fijos dentro, como el botón y el menú */
     }
 
-    /* Contenedor para alinear .header y .container al mismo ancho */
-    .wrapper {
-      max-width: 1000px; /* Ajusta el ancho máximo para acomodar la disposición en pantallas grandes */
-      width: 100%;
-      margin: 0 auto;
+    /* Contenedor principal con flexbox para menú y contenido */
+    .main-container {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* Clases para cambiar fondo según tipo de usuario */
-    .bg-leader {
-      background-color: #b3e5fc !important; /* Celeste claro */
-      background-image: none !important;
-    }
-    .bg-dependent {
-      background-color: #c8e6c9 !important; /* Verde claro */
-      background-image: none !important;
-    }
-
-    /* ================== MODO OSCURO ================== */
-    .dark-mode {
-      background-color: #121212 !important; /* Fondo oscuro */
-      background-image: none !important;
-      color: #f1f1f1;
-    }
-    .dark-mode .container {
-      background-color: #1f1f1f;
-      color: #fff;
-    }
-    .dark-mode input[type="text"] {
-      background-color: #2c2c2c;
-      color: #fff;
-      border: 1px solid #444;
-    }
-    .dark-mode button {
-      background-color: #444;
-      color: #fff;
-    }
-    .dark-mode button:hover {
-      background-color: #666;
-    }
-    .dark-mode .output {
-      background-color: #2c2c2c;
-      border: 1px solid #444;
-    }
-
-    /* Ajustes específicos para el menú acordeón en modo oscuro */
-    .dark-mode .side-menu {
-      background-color: #333 !important;
-      color: #fff !important;
-      border: 1px solid #666 !important;
-    }
-    .dark-mode .accordion-header {
-      background-color: #444 !important;
-      color: #fff !important;
-    }
-    .dark-mode .accordion-content {
-      background-color: #555 !important;
-      color: #fff !important;
-      border-color: #666 !important;
-    }
-
-    /* Si coincide dark-mode con leader/dependent, prioriza el modo oscuro */
-    .dark-mode.bg-leader,
-    .dark-mode.bg-dependent {
-      background-color: #121212 !important;
+      width: 100%;
+      max-width: 1200px; /* Ajusta según sea necesario */
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 25px;
+      transition: all 0.3s ease;
     }
 
     /* ================== ENCABEZADO CON LOGO ================== */
@@ -124,23 +67,17 @@
       text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
     }
 
-    /* ================== CONTENEDOR PRINCIPAL ================== */
-    .container {
-      background-color: rgba(255, 255, 255, 0.95);
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      padding: 25px;
-      margin-bottom: 20px;
-      transition: all 0.3s ease;
-      position: relative;
+    /* ================== SECCIÓN DE CONSULTA ================== */
+    .consulta-section {
+      flex: 1;
+      margin-right: 20px;
+      display: flex;
+      flex-direction: column;
     }
-
-    /* ================== SECCIONES ================== */
-    .section {
+    .consulta-section .section {
       margin-bottom: 1.5rem;
     }
-    .section label {
+    .consulta-section .section label {
       font-weight: 700;
       display: inline-block;
       margin-bottom: 0.5rem;
@@ -148,7 +85,7 @@
     }
 
     /* ================== INPUTS ================== */
-    input[type="text"] {
+    .consulta-section input[type="text"] {
       width: 100%;
       padding: 16px; /* Aumentado de 8px a 16px */
       border: 1px solid #ccc;
@@ -159,13 +96,13 @@
     }
 
     /* ================== BOTONES ================== */
-    .btn-row {
+    .consulta-section .btn-row {
       margin-top: 10px;
       display: flex;
       gap: 10px; /* Separación entre botones */
       flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas pequeñas */
     }
-    button {
+    .consulta-section button {
       padding: 12px 24px; /* Aumentado para mejor usabilidad */
       background-color: #0E5CAD;
       border: none;
@@ -176,35 +113,17 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    button:hover {
-      background-color: #09406e;
-    }
-
-    /* ================== BOTÓN MODO OSCURO (parte inferior derecha) ================== */
-    #toggleDarkMode {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      font-size: 1.2rem;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999; /* Para que quede por encima del menú */
-      background-color: #0E5CAD;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #toggleDarkMode:hover {
+    .consulta-section button:hover {
       background-color: #09406e;
     }
 
     /* ================== ÁREA DE RESPUESTA ================== */
-    .output {
+    .response-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .response-section .output {
       margin-top: 1rem;
       background-color: #f9f9f9;
       border: 1px solid #eee;
@@ -246,10 +165,7 @@
 
     /* ================== MENÚ LATERAL (ACORDEÓN) PARA LÍDER ================== */
     .side-menu {
-      position: fixed;
-      top: 150px; /* Ajustar según tu preferencia */
-      left: 20px;
-      width: 240px;
+      width: 300px; /* Ajusta según sea necesario */
       background-color: #0E5CAD; /* Fondo azul */
       color: #fff;               /* Texto blanco */
       border: 1px solid #ccc;
@@ -257,14 +173,14 @@
       padding: 15px;
       display: none; /* Oculto por defecto, se mostrará cuando sea líder */
       z-index: 998; /* Menor que el botón de modo oscuro */
-      max-height: 60vh; /* Para poder hacer scroll si el contenido es muy largo */
+      max-height: 80vh; /* Para poder hacer scroll si el contenido es muy largo */
       overflow-y: auto;
       transition: all 0.3s ease;
     }
 
     .side-menu h2 {
       margin-bottom: 10px;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
 
     /* Acordeón */
@@ -281,7 +197,7 @@
       padding: 10px;
       font-weight: 700;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 1rem;
       transition: background-color 0.3s ease;
     }
     .accordion-header:hover {
@@ -295,7 +211,7 @@
       border: 1px solid #fff;
       border-top: none;
       border-radius: 0 0 8px 8px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       margin-bottom: 5px;
       max-height: 300px; /* Limita la altura para facilitar la lectura */
       overflow-y: auto;
@@ -314,32 +230,63 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      align-self: flex-start;
     }
     .back-button:hover {
       background-color: #09406e;
     }
 
+    /* ================== BOTÓN MODO OSCURO (parte inferior derecha) ================== */
+    #toggleDarkMode {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999; /* Para que quede por encima del menú */
+      background-color: #0E5CAD;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #toggleDarkMode:hover {
+      background-color: #09406e;
+    }
+
     /* ================== RESPONSIVE ================== */
-    @media (max-width: 600px) {
-      .wrapper {
-        padding: 0 10px;
+    @media (max-width: 1000px) {
+      .main-container {
+        flex-direction: column;
       }
-      button {
-        width: 100%; /* Botones ocupan todo el ancho disponible */
+      .consulta-section {
+        margin-right: 0;
+      }
+      .side-menu {
+        width: 100%;
+        margin-top: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header img {
+        max-width: 150px;
+      }
+      .accordion-header {
+        font-size: 0.9rem;
+      }
+      .accordion-content {
+        font-size: 0.85rem;
       }
       #toggleDarkMode {
         width: 40px;
         height: 40px;
         font-size: 1rem;
-      }
-      .side-menu {
-        top: auto;
-        bottom: 80px; /* Para que no se sobreponga con el botón en pantallas pequeñas */
-        left: 10px;
-        width: 180px;
-      }
-      .accordion-content {
-        max-height: none; /* Permite expandirse completamente en móviles */
       }
     }
 
@@ -352,7 +299,7 @@
       transition: all 0.3s ease;
     }
 
-    .output, .document-data, .accordion-response {
+    .output, .dependent-box {
       background-color: #f9f9f9;
       border: 1px solid #eee;
       border-radius: 8px;
@@ -371,84 +318,86 @@
       <h1>Datos Actuales Open Key Residentes Barrio El Centauro</h1>
     </div>
 
-    <!-- Contenedor principal -->
-    <div class="container">
+    <!-- Contenedor principal con flexbox para consulta y respuesta -->
+    <div class="main-container">
       <!-- Sección de consulta por número de documento -->
-      <div class="section">
-        <label for="consulta">Coloca un número de documento:</label>
-        <input type="text" id="consulta" placeholder="Coloca un número de documento">
-        <div class="btn-row">
-          <button id="btnConsultar">Consultar</button>
-          <button id="btnBorrar">Borrar documento</button>
+      <div class="consulta-section">
+        <div class="section">
+          <label for="consulta">Coloca un número de documento:</label>
+          <input type="text" id="consulta" placeholder="Coloca un número de documento">
+          <div class="btn-row">
+            <button id="btnConsultar">Consultar</button>
+            <button id="btnBorrar">Borrar documento</button>
+          </div>
         </div>
+
+        <!-- Área donde se muestran las respuestas -->
+        <div class="output" id="respuesta"></div>
       </div>
 
-      <!-- Área donde se muestran las respuestas -->
-      <div class="output" id="respuesta"></div>
-    </div>
-  </div>
+      <!-- Menú lateral (acordeón) para Líder de Grupo (invisible por defecto) -->
+      <div class="side-menu" id="sideMenu">
+        <h2>Información importante</h2>
+        <div class="accordion">
 
-  <!-- Menú lateral (acordeón) para Líder de Grupo (invisible por defecto) -->
-  <div class="side-menu" id="sideMenu">
-    <h2>Información importante</h2>
-    <div class="accordion">
+          <!-- Punto 1: Preguntas frecuentes -->
+          <div class="accordion-item">
+            <button class="accordion-header">1. Preguntas frecuentes</button>
+            <div class="accordion-content">
+              <p>
+                Revisar que todos tus dependientes tengan un email válido y que no se repita con ningún otro, 
+                dado que será el usuario para ingresar a Open Key. Para agregar o modificar un email, 
+                ver el punto 4 del menú.<br><br>
+                Si necesitas dar de alta o baja un dependiente, no lo podrás hacer tú mismo; 
+                deberás enviar un correo al administrador pidiendo el cambio al siguiente email: 
+                <strong>elcentauroadm@gmail.com</strong>.
+              </p>
+            </div>
+          </div>
 
-      <!-- Punto 1: Preguntas frecuentes -->
-      <div class="accordion-item">
-        <button class="accordion-header">1. Preguntas frecuentes</button>
-        <div class="accordion-content">
-          <p>
-            Revisar que todos tus dependientes tengan un email válido y que no se repita con ningún otro, 
-            dado que será el usuario para ingresar a Open Key. Para agregar o modificar un email, 
-            ver el punto 4 del menú.<br><br>
-            Si necesitas dar de alta o baja un dependiente, no lo podrás hacer tú mismo; 
-            deberás enviar un correo al administrador pidiendo el cambio al siguiente email: 
-            <strong>elcentauroadm@gmail.com</strong>.
-          </p>
+          <!-- Punto 2: Cómo bajar la app de Open Key -->
+          <div class="accordion-item">
+            <button class="accordion-header">2. Cómo bajar la app de Open Key</button>
+            <div class="accordion-content">
+              <p>Instrucciones para descargar la aplicación en diferentes dispositivos.</p>
+            </div>
+          </div>
+
+          <!-- Punto 3: Cómo sacarme la selfie -->
+          <div class="accordion-item">
+            <button class="accordion-header">3. Cómo sacarme la selfie</button>
+            <div class="accordion-content">
+              <p>
+                Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key 
+                pero grisado; se te avisará cuando sea el momento.
+              </p>
+            </div>
+          </div>
+
+          <!-- Punto 4: Cómo modificar los datos de mi grupo familiar -->
+          <div class="accordion-item">
+            <button class="accordion-header">4. Cómo modificar los datos de mi grupo familiar</button>
+            <div class="accordion-content">
+              <p>
+                Vos como Líder de grupo podés entrar a la aplicación de Open Key en la sección
+                <strong>Censo - Mi Grupo Familiar</strong> y, buscando por número de documento de tus
+                dependientes, podrás modificar los siguientes datos:
+              </p>
+              <ul>
+                <li>Nombre y apellido (si está mal cargado).</li>
+                <li>Email (si no es correcto; este será el usuario para registrarse en la aplicación Open Key).</li>
+                <li>Teléfono (si está incorrecto o en blanco).</li>
+                <li>Relación de parentesco (si está incorrecta o en blanco).</li>
+              </ul>
+              <p>
+                <strong>Nota:</strong> El email es el usuario para entrar a Open Key, por lo tanto,
+                aseguráte de que todos los dependientes tengan un email único.
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <!-- Punto 2: Cómo bajar la app de Open Key -->
-      <div class="accordion-item">
-        <button class="accordion-header">2. Cómo bajar la app de Open Key</button>
-        <div class="accordion-content">
-          <p>Instrucciones para descargar la aplicación en diferentes dispositivos.</p>
-        </div>
-      </div>
-
-      <!-- Punto 3: Cómo sacarme la selfie -->
-      <div class="accordion-item">
-        <button class="accordion-header">3. Cómo sacarme la selfie</button>
-        <div class="accordion-content">
-          <p>
-            Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key 
-            pero grisado; se te avisará cuando sea el momento.
-          </p>
-        </div>
-      </div>
-
-      <!-- Punto 4: Cómo modificar los datos de mi grupo familiar -->
-      <div class="accordion-item">
-        <button class="accordion-header">4. Cómo modificar los datos de mi grupo familiar</button>
-        <div class="accordion-content">
-          <p>
-            Vos como Líder de grupo podés entrar a la aplicación de Open Key en la sección
-            <strong>Censo - Mi Grupo Familiar</strong> y, buscando por número de documento de tus
-            dependientes, podrás modificar los siguientes datos:
-          </p>
-          <ul>
-            <li>Nombre y apellido (si está mal cargado).</li>
-            <li>Email (si no es correcto; este será el usuario para registrarse en la aplicación Open Key).</li>
-            <li>Teléfono (si está incorrecto o en blanco).</li>
-            <li>Relación de parentesco (si está incorrecta o en blanco).</li>
-          </ul>
-          <p>
-            <strong>Nota:</strong> El email es el usuario para entrar a Open Key, por lo tanto,
-            aseguráte de que todos los dependientes tengan un email único.
-          </p>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -535,11 +484,6 @@
       document.getElementById('sideMenu').style.display = 'none';
       // Remover clases de fondo
       document.body.classList.remove('bg-leader', 'bg-dependent');
-      // Remover clase de expansión de la respuesta
-      const responseContainer = document.querySelector('.response-container');
-      if (responseContainer) {
-        responseContainer.remove();
-      }
     }
 
     function realizarConsulta() {
@@ -758,39 +702,28 @@
           const content = header.nextElementSibling;
 
           if (content.style.display === 'block') {
-            // Si ya está abierto, cerrarlo y restaurar el menú
+            // Si ya está abierto, cerrarlo
             content.style.display = 'none';
-            mostrarSideMenu();
           } else {
             // Cerrar cualquier otro contenido abierto
             document.querySelectorAll('.accordion-content').forEach(c => c.style.display = 'none');
 
-            // Mostrar el contenido seleccionado
+            // Abrir el contenido seleccionado
             content.style.display = 'block';
 
-            // Ocultar el menú y mostrar el contenido del acordeón
-            ocultarSideMenu();
-            mostrarAccordionContent(header.textContent, content.innerHTML);
+            // Mostrar el contenido en el área de respuesta y ocultar el menú
+            mostrarContenidoAcordeon(header.textContent, content.innerHTML);
           }
         });
       });
     }
 
-    function ocultarSideMenu() {
-      const sideMenu = document.getElementById('sideMenu');
-      sideMenu.style.display = 'none';
-    }
-
-    function mostrarSideMenu() {
-      const sideMenu = document.getElementById('sideMenu');
-      sideMenu.style.display = 'block';
-    }
-
-    function mostrarAccordionContent(titulo, contenido) {
+    function mostrarContenidoAcordeon(titulo, contenido) {
       const respuesta = document.getElementById('respuesta');
+      const sideMenu = document.getElementById('sideMenu');
 
-      // Limpiar la respuesta actual
-      respuesta.innerHTML = '';
+      // Ocultar el menú acordeón
+      sideMenu.style.display = 'none';
 
       // Crear contenedor para la pregunta y respuesta
       const accordionResponseDiv = document.createElement('div');
@@ -810,10 +743,10 @@
       backButton.classList.add('back-button');
       backButton.textContent = 'Volver al Menú';
       backButton.addEventListener('click', () => {
-        // Restaurar el menú acordeón
-        mostrarSideMenu();
-        // Limpiar la respuesta
-        respuesta.innerHTML = document.getElementById('document-data').innerHTML;
+        // Mostrar el menú acordeón
+        sideMenu.style.display = 'block';
+        // Remover el contenido del acordeón
+        accordionResponseDiv.remove();
       });
       accordionResponseDiv.appendChild(backButton);
 
