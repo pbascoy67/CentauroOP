@@ -28,7 +28,7 @@
       background: linear-gradient(135deg, #79F1A4 0%, #0E5CAD 100%);
       color: #333;
       transition: background-color 0.3s ease, color 0.3s ease;
-      overflow-x: hidden; /* Evita el desplazamiento horizontal */
+      overflow-x: hidden;
     }
     
     /* Encabezado */
@@ -61,7 +61,7 @@
       padding: 20px;
       margin-bottom: 20px;
       transition: all 0.3s ease;
-      flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+      flex-wrap: wrap;
     }
     
     /* Sección de Consulta */
@@ -125,7 +125,7 @@
       color: #fff;
       border-radius: 8px;
       padding: 15px;
-      display: none; /* Oculto por defecto */
+      display: none;
       max-height: 80vh;
       overflow-y: auto;
       transition: all 0.3s ease;
@@ -658,7 +658,7 @@
       
       let dataToExport = [];
       
-      // Armar la estructura incluyendo la nueva columna "Parentezco" (después de "Líder")
+      // Armar la estructura de registros con la nueva columna "Parentezco" (quedando en blanco)
       if (currentUserRole === "lider") {
         // Registro del líder
         dataToExport.push({
@@ -669,7 +669,7 @@
           "Lote": currentUserData.lote,
           "App": currentUserData.app,
           "Líder": "",
-          "Parentezco": "Líder"
+          "Parentezco": ""
         });
         // Registros de cada dependiente
         currentDependentsData.forEach(dep => {
@@ -681,7 +681,7 @@
             "Lote": dep.lote,
             "App": dep.app,
             "Líder": dep.lider,
-            "Parentezco": "Dependiente"
+            "Parentezco": ""
           });
         });
       } else if (currentUserRole === "dependiente") {
@@ -695,12 +695,12 @@
           "Lote": currentUserData.lote,
           "App": currentUserData.app,
           "Líder": liderNombre,
-          "Parentezco": "Dependiente"
+          "Parentezco": ""
         });
       }
       
       // Agregar 4 filas en blanco
-      for(let i=0; i<4; i++){
+      for (let i = 0; i < 4; i++) {
         dataToExport.push({
           "Rol": "",
           "Documento": "",
@@ -713,9 +713,29 @@
         });
       }
       
-      // Agregar la leyenda en la siguiente fila
+      // Agregar las 3 filas con el mensaje, cada una en su propia fila
       dataToExport.push({
-        "Rol": "Devolver este excel al administrador si quieres agregar un nuevo dependiente completando los datos y pintar la linea del dependientes que quieres dar de baja",
+        "Rol": "Devolver al Administrador si quieres modificarlo algo",
+        "Documento": "",
+        "Nombre y Apellido": "",
+        "Email": "",
+        "Lote": "",
+        "App": "",
+        "Líder": "",
+        "Parentezco": ""
+      });
+      dataToExport.push({
+        "Rol": "Si quieres agregar un dependiente completar los datos incluido el parentezco",
+        "Documento": "",
+        "Nombre y Apellido": "",
+        "Email": "",
+        "Lote": "",
+        "App": "",
+        "Líder": "",
+        "Parentezco": ""
+      });
+      dataToExport.push({
+        "Rol": "Si quieres dar de baja un dependiente marcarlo la fila con rojo",
         "Documento": "",
         "Nombre y Apellido": "",
         "Email": "",
@@ -728,6 +748,10 @@
       // Crear un nuevo libro de Excel y hoja de trabajo
       let wb = XLSX.utils.book_new();
       let ws = XLSX.utils.json_to_sheet(dataToExport, {header: ["Rol", "Documento", "Nombre y Apellido", "Email", "Lote", "App", "Líder", "Parentezco"]});
+      
+      // Definir el ancho de la columna A en 35 caracteres
+      ws['!cols'] = [{ wch: 35 }];
+      
       XLSX.utils.book_append_sheet(wb, ws, "Consulta");
       
       // Generar el nombre del archivo usando el número de documento consultado
