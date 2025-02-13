@@ -86,7 +86,7 @@
       flex-wrap: wrap;
     }
     .btn-row button {
-      flex: 1 1 30%; /* Ajustado para tres botones en la misma línea */
+      flex: 1 1 30%; /* Tres botones en línea */
       font-size: 1rem;
       padding: 12px;
       border-radius: 4px;
@@ -658,9 +658,9 @@
       
       let dataToExport = [];
       
-      // Definir formato de celdas: Rol, Documento, Nombre y Apellido, Email, Lote, App, Líder
+      // Armar la estructura incluyendo la nueva columna "Parentezco" (después de "Líder")
       if (currentUserRole === "lider") {
-        // Agregar fila del líder
+        // Registro del líder
         dataToExport.push({
           "Rol": "Líder",
           "Documento": currentUserData.documento,
@@ -668,9 +668,10 @@
           "Email": currentUserData.email,
           "Lote": currentUserData.lote,
           "App": currentUserData.app,
-          "Líder": ""
+          "Líder": "",
+          "Parentezco": "Líder"
         });
-        // Agregar cada dependiente
+        // Registros de cada dependiente
         currentDependentsData.forEach(dep => {
           dataToExport.push({
             "Rol": "Dependiente",
@@ -679,11 +680,12 @@
             "Email": dep.email,
             "Lote": dep.lote,
             "App": dep.app,
-            "Líder": dep.lider
+            "Líder": dep.lider,
+            "Parentezco": "Dependiente"
           });
         });
       } else if (currentUserRole === "dependiente") {
-        // Para dependiente, exportar su fila con datos del líder si están disponibles
+        // Para dependiente, exportar su registro junto con el líder
         let liderNombre = currentLeaderData ? currentLeaderData.nombre : "";
         dataToExport.push({
           "Rol": "Dependiente",
@@ -692,17 +694,45 @@
           "Email": currentUserData.email,
           "Lote": currentUserData.lote,
           "App": currentUserData.app,
-          "Líder": liderNombre
+          "Líder": liderNombre,
+          "Parentezco": "Dependiente"
         });
       }
       
+      // Agregar 4 filas en blanco
+      for(let i=0; i<4; i++){
+        dataToExport.push({
+          "Rol": "",
+          "Documento": "",
+          "Nombre y Apellido": "",
+          "Email": "",
+          "Lote": "",
+          "App": "",
+          "Líder": "",
+          "Parentezco": ""
+        });
+      }
+      
+      // Agregar la leyenda en la siguiente fila
+      dataToExport.push({
+        "Rol": "Devolver este excel al administrador si quieres agregar un nuevo dependiente completando los datos y pintar la linea del dependientes que quieres dar de baja",
+        "Documento": "",
+        "Nombre y Apellido": "",
+        "Email": "",
+        "Lote": "",
+        "App": "",
+        "Líder": "",
+        "Parentezco": ""
+      });
+      
       // Crear un nuevo libro de Excel y hoja de trabajo
       let wb = XLSX.utils.book_new();
-      let ws = XLSX.utils.json_to_sheet(dataToExport, {header: ["Rol", "Documento", "Nombre y Apellido", "Email", "Lote", "App", "Líder"]});
+      let ws = XLSX.utils.json_to_sheet(dataToExport, {header: ["Rol", "Documento", "Nombre y Apellido", "Email", "Lote", "App", "Líder", "Parentezco"]});
       XLSX.utils.book_append_sheet(wb, ws, "Consulta");
       
-      // Descargar el archivo Excel
-      XLSX.writeFile(wb, "Consulta_Export.xlsx");
+      // Generar el nombre del archivo usando el número de documento consultado
+      let fileName = `Consulta_${currentUserData.documento}.xlsx`;
+      XLSX.writeFile(wb, fileName);
     }
     
     // Mostrar Mensajes
