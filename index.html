@@ -349,7 +349,6 @@
   
   <!-- Encabezado con Logo y Título -->
   <header class="header">
-    <!-- Asegúrate de que la imagen Centauro3.png esté en la misma carpeta que este archivo HTML o ajusta la ruta según corresponda -->
     <img src="Centauro3.png" alt="Logo de El Centauro" loading="lazy">
     <h1>Datos Actuales Open Key Residentes Barrio El Centauro</h1>
   </header>
@@ -419,7 +418,7 @@
       fetch(excelUrl)
         .then(response => {
           if (!response.ok) {
-            throw new Error(`No se pudo acceder al archivo Excel. Código: ${response.status}`);
+            throw new Error(\`No se pudo acceder al archivo Excel. Código: \${response.status}\`);
           }
           return response.arrayBuffer();
         })
@@ -755,7 +754,7 @@
       XLSX.utils.book_append_sheet(wb, ws, "Consulta");
       
       // Generar el nombre del archivo usando el número de documento consultado
-      let fileName = `Consulta_${currentUserData.documento}.xlsx`;
+      let fileName = \`Consulta_\${currentUserData.documento}.xlsx\`;
       XLSX.writeFile(wb, fileName);
     }
     
@@ -807,7 +806,11 @@
             id: 'collapseThree',
             header: '3. Cómo sacarme la selfie',
             body: `
-              Aún la posibilidad de sacarse la selfie no está habilitado. Tendrás el botón en la app de Open Key pero grisado; se te avisará cuando sea el momento.
+              1-Accede a la App: Abre la aplicación Open Key en tu dispositivo.<br><br>
+              2-Selecciona el Botón de Selfie: Busca y pulsa el botón que dice "Selfie".<br><br>
+              3-Sigue las Indicaciones: Continúa con los pasos que te va indicando la app para tomar la foto de manera correcta.<br><br>
+              4-Asegúrate de la Calidad: Procura seguir todas las recomendaciones para que el reconocimiento facial funcione adecuadamente.<br><br>
+              <a href="Selfie.mp4" target="_blank" rel="noopener noreferrer">Ver Video</a>
             `
           },
           {
@@ -862,13 +865,13 @@
         // Encabezado
         const header = document.createElement('h2');
         header.classList.add('accordion-header');
-        header.id = `heading-${item.id}`;
+        header.id = \`heading-\${item.id}\`;
         
         const button = document.createElement('button');
         button.classList.add('accordion-button', 'collapsed');
         button.type = 'button';
         button.setAttribute('data-bs-toggle', 'collapse');
-        button.setAttribute('data-bs-target', `#${item.id}`);
+        button.setAttribute('data-bs-target', \`#\${item.id}\`);
         button.setAttribute('aria-expanded', 'false');
         button.setAttribute('aria-controls', item.id);
         button.innerHTML = item.header;
@@ -880,7 +883,7 @@
         const collapseDiv = document.createElement('div');
         collapseDiv.id = item.id;
         collapseDiv.classList.add('accordion-collapse', 'collapse');
-        collapseDiv.setAttribute('aria-labelledby', `heading-${item.id}`);
+        collapseDiv.setAttribute('aria-labelledby', \`heading-\${item.id}\`);
         collapseDiv.setAttribute('data-bs-parent', '#accordionExample');
         
         const body = document.createElement('div');
